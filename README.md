@@ -1,10 +1,10 @@
 # Introduction
 
-Docere is a workflow for publising data analyses.
+Docere is a workflow for publishing data analyses.
 
 Docere sounds like "dose air"
 
-# Design Goals
+# Design Principles
 
 * Analysts should have total control of their report presentation
 * Analysts should be able to get their work reviewed
@@ -36,13 +36,11 @@ Other `metadata pages` could include: RSS feeds, topic pages, or reports by a sp
 
 # Advantages and Weaknesses
 
-## HTML Based
+## HTML is difficult to review in GitHub
 
-A Docere knowledge repository stores raw HTML files.
+A Docere `knowledge repository` stores raw HTML files.
 This gives the analyst complete control over the format of the report,
 but comes with some notable disadvantages.
-
-### HTML is difficult to review in GitHub
 
 HTML diffs are often cluttered with boilerplate.
 Even worse, GitHub doesn't allow you to review the rendered HTML page in your browser.
@@ -55,7 +53,7 @@ Presenting data in a meaningful and compelling format is a difficult task.
 Different reports need different formats.
 It is **not this tool's job to be opinionated**.
 
-### Analyses aren't inherently reproducible
+## `reports` aren't inherently reproducible
 
 This tool does not save any of the code used to generate a report.
 Instead, **the analyst is responsible for making their results reproducible**.
