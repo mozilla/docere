@@ -1,9 +1,15 @@
 language: python
+
+python:
+    - "2.7"
+
 cache: pip
+
 install:
   - pip install tox-travis codecov
+
 script:
   - tox
-  - tox -e flake8
+
 after_success:
 - codecov
