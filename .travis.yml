@@ -10,7 +10,6 @@ cache: pip
 install:
   - pip install tox-travis codecov
 script:
-  - tox
-  - tox -e flake8
+  - tox -e $TOX_ENV
 after_success:
 - codecov
