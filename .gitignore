@@ -1,8 +1,8 @@
 *.pyc
+.coverage
 
 .cache/
-.coverage/
 .tox/
 dist/
 build/
-*.egg.info/
+*.egg-info/
