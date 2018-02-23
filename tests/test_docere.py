@@ -1,6 +1,2 @@
-# import pytest
-# import docere
-
-
-def test_docere():
+def test_tests():
     assert True
