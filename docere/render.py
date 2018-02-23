@@ -55,10 +55,7 @@ def tmp_cd(path):
     finally: os.chdir(curdir)
 
 
-def main():
-    kr = 'tests/data/kr'
-    outdir = './output'
-
+def main(kr, outdir):
     metadata_generators = [
         build_index,
     ]

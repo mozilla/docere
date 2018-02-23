@@ -24,6 +24,7 @@ setup(
     install_requires=[
         'pyfunctional',
         'jinja2',
+        'click',
     ],
     tests_require=test_deps,
     extras_require=extras,
