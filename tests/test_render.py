@@ -1,5 +1,4 @@
 from docere.render import _get_posts, tmp_cd
-import datetime
 import os
 
 
@@ -15,7 +14,7 @@ def test_get_posts():
     expected = [
         {
             "title": "Crash Count",
-            "publish_date": datetime.date(2018,1,1),
+            "publish_date": "2018-01-01",
             "author": "Joseph Blowseph",
             "file": "not_index.html",
             "path": "tests/data/kr/crash_count/not_index.html",
@@ -23,7 +22,7 @@ def test_get_posts():
         },
         {
             "title": "User Count",
-            "publish_date": datetime.date(2018,1,2),
+            "publish_date": "2018-01-02",
             "author": "Joe Blow",
             "file": "index.html",
             "path": "tests/data/kr/user_count/index.html",

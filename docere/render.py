@@ -4,9 +4,9 @@ from shutil import copytree, rmtree
 from contextlib import contextmanager
 from .index import build_index
 import os
-import yaml
+import json
 
-POST_CONFIG_FILE = 'post.yml'
+POST_CONFIG_FILE = 'post.json'
 POST_DEFAULTS = {
     'file': 'index.html'
 }
@@ -22,11 +22,11 @@ def _load_post_config(directory):
     # Load config File
     config_path = os.path.join(directory.path, POST_CONFIG_FILE)
     with open(config_path, 'r') as infile:
-        config = yaml.load(infile)
+        config = json.load(infile)
     
     # Set defaults
     out = POST_DEFAULTS.copy()
-    for (key, value) in config.iteritems():
+    for (key, value) in config.items():
         out[key] = value
     
     # Add directory in which config file was found
