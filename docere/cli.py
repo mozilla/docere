@@ -12,3 +12,7 @@ def cli():
               help='Desired path for rendered documentation')
 def render(knowledge_repo, outdir):
     main(knowledge_repo, outdir)
+
+
+if __name__ == "__main__":
+    cli()
