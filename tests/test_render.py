@@ -39,4 +39,3 @@ def test_tmp_cd():
         assert os.getcwd() != basewd
 
     assert os.getcwd() == basewd
-

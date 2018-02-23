@@ -6,6 +6,7 @@ from .render import main
 def cli():
     pass
 
+
 @cli.command()
 @click.option('--knowledge-repo', default='kr', help='Path to knowledge repo')
 @click.option('--outdir', default='output',

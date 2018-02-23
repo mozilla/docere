@@ -1,6 +1,5 @@
 import tempfile
 import shutil
-import click
 import os
 from contextlib import contextmanager
 from click.testing import CliRunner

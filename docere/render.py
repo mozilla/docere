@@ -13,6 +13,7 @@ POST_DEFAULTS = {
 
 Directory = namedtuple('Directory', ['path', 'dirnames', 'filenames'])
 
+
 def _load_post_config(directory):
     """Take Directory object containing a config file and return the contents
 
@@ -23,12 +24,12 @@ def _load_post_config(directory):
     config_path = os.path.join(directory.path, POST_CONFIG_FILE)
     with open(config_path, 'r') as infile:
         config = json.load(infile)
-    
+
     # Set defaults
     out = POST_DEFAULTS.copy()
     for (key, value) in config.items():
         out[key] = value
-    
+
     # Add directory in which config file was found
     out['dir'] = directory.path
     out['path'] = os.path.join(directory.path, out['file'])
@@ -51,8 +52,10 @@ def tmp_cd(path):
     """Temporarily change working directory"""
     curdir = os.getcwd()
     os.chdir(path)
-    try: yield
-    finally: os.chdir(curdir)
+    try:
+        yield
+    finally:
+        os.chdir(curdir)
 
 
 def main(kr, outdir):
