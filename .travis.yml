@@ -1,4 +1,17 @@
 language: python
+jobs:
+  include:
+  - stage: test
+  - stage: build
+    script:
+    - pip install .
+    - python -m docere.cli render --knowledge-repo tests/data/kr
+  - stage: deploy
+    #if: type = push AND repo = harterrt/docere AND branch = master
+    - ls --recursive output
+    - pip install awscli
+    - aws s3 cp --recursive output/ s3://docere-test/ --acl "public-read"
+    skip_cleanup: true
 
 install:
 - pip install tox-travis codecov
@@ -12,15 +25,3 @@ script:
 after_success:
 - codecov
 
-jobs:
-  include:
-  - stage: build
-    script:
-    - pip install .
-    - python -m docere.cli render --knowledge-repo tests/data/kr
-  - stage: deploy
-    #if: type = push AND repo = harterrt/docere AND branch = master
-    - ls --recursive output
-    - pip install awscli
-    - aws s3 cp --recursive output/ s3://docere-test/ --acl "public-read"
-    skip_cleanup: true
