@@ -13,14 +13,14 @@ after_success:
 jobs:
   include:
   - stage: deploy
-    on:
-      repo: harterrt/docere
-    script:
-    - pip install .
-    - python -m docere.cli render --knowledge-repo tests/data/kr
-    - ls output/
+    # on:
+    #   repo: harterrt/docere
+    # script:
+    # - pip install .
+    # - python -m docere.cli render --knowledge-repo tests/data/kr
+    # - ls output/
     skip_cleanup: true
-    local_dir: output
+    # local_dir: output
     provider: s3
     bucket: docere-test
     acl: public_read
