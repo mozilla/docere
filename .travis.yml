@@ -18,6 +18,7 @@ jobs:
     - pip install .
     - python -m docere.cli render --knowledge-repo tests/data/kr
     deploy: &s3
+      skip-cleanup: true
       provider: s3
       local_dir: output
       bucket: docere-test
