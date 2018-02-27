@@ -1,24 +1,23 @@
 language: python
-env:
-- TOX_ENV=py34
-# - TOX_ENV=py27
-# - TOX_ENV=flake8
-cache: pip
 install:
 - pip install tox-travis codecov
-script:
-- echo Passes
-# - tox -e $TOX_ENV
-after_success:
-- codecov
-deploy:
-  provider: s3
-  access_key_id: AKIAIWS75WFDTIQQVFNQ
-  secret_access_key:
-    secure: ETBTamb9XgsGvNWmoCy3fbUErO2gzz2oJsTwmq/Wyw76pUhH4CwTxkof2+u/jNTw+z1xLIZN1/kp6vc13F2Iy0ZW8K4favGMxXvzTMoYkEH4jr6lRftguLjAfB5pBGZL9gL44tnKI6XjwwgJ94q33qgLRIMNZQuN1e5pgzyAH4CsKqLEPsKZPKhUTFqcIcQEX8jzDP9zQtTkTYEsgfmQHbgNnyxAhE3IyTd1VpRgRJLfYzBZEQE8aLHGwLNhzpe/yz+ymQaBs7mgroa65rOllfXS/hlESexDhm5vHO7QCOnTVrYo6Yy4VR9tLBH5/WlxkCofaxiuwLhFmZUjHIZD7XJoqPzAIuzAkGGueaTqB5UULcl323ObvUjq1efxqny6juRIJHHYnqZbXFkC+OYsHaIPGDya1y5DpdGihwJ20vjcqOFIWiXBILYUHmE18yocY97X0QUvsf0atO+GgRwcWXyZ9Z8i309wrncIjtORKe/N/DRg1L6eDl7EsHPz6mau22EbI/AU/8+5TD9rnBZp3Wr9JsWTfLTjR71NHIGdH3Tg8+Se0/fK1AD9fLZ4rQOTKG6t1P/qM97pjcnlhQUQq5DtXsszQ4wEqimymRn+LiVFMI7/VGUm6s0HILfT+QOU0RjsbEhEWRLuHaLPRqF0Y48gTCJgiN1+8x8YXH3J9Pc=
-  bucket: docere-test
-  local-dir: output
-  acl: public_read
-#  on:
-#    repo: harterrt/docere
-#    branch: ci
+jobs:
+  include:
+  - stage: test
+    env:
+    - TOX_ENV=py34
+    cache: pip
+    script:
+    - echo Passes!
+    after_success:
+    - codecov
+  - stage: deploy
+    script:
+    - pip install awscli
+    - pip install .
+    - python -m docere.cli render --knowledge-repo tests/data/kr
+    - aws s3 cp --recursive output/ s3://docere-test/
+    skip_cleanup: true
+    access_key_id: AKIAIWS75WFDTIQQVFNQ
+    secret_access_key:
+      secure: VyNr1NCWagM6owQ4PIIUCkz8V57mg/jKeXGWRwUcdTOdqRcPCHsb03UT8tMU9HsxMCzusUGz4H/uhu3jxGijk5lPgMWuM5BBEFWTAGqHycLs8MX8JeXuKcJTwDow1+aVq1CNLh12G34Hgaz577ADk34FaISLcqRjlhXiCMGejm3D140BcjMnn/FxDuF8LjM6ocEXQUW8Ew6GPdz6VQZZFBVHd5ZTG/yWb0yk6GT2E6FOBBcH7crrkCUYdT5gfOZpUJI1jUpLBtcT8Xinxo3SMAYjlhBU313B593o+f9VO+Mv3xe4zHDX1syTBi3ouTM+63WyH1fhzAdJ64fPRxod9DaDLK4bthKcXj/949WLkxXP37a1yHHtPucMl3FoAOrswS0yB2REdufBDMgXyJxxF2LMGpswt0A///uGRtZgI7LTXDh+Hbzghs1NeGbv0zgbg9phHm2s8/FcjtqyQS+FYyFSDJctEJgJnFQ5SFKwocYjp/UqqMor7qD0EVen1dGgmG3F7+/NL3mkKvLzpOihzEf/6Rj/jB4wrrKFvHh8TZELeNgNaxkTBnLjkXiwXi52u5TkG+wgHtnNLmMRjEm2pwPgbTLPQT1DMmgVnwrxpCwuljQRUGXNc16OGHgoHXWEWj1pInQtmERIL1KUGIxlBf92MmoaxERZz7k/9T9dcXw=
