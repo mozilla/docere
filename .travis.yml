@@ -12,14 +12,11 @@ after_success:
 - codecov
 jobs:
   include:
-  - stage: build
+  - stage: deploy
+    if: repo = harterrt/docere AND branch = master AND type = push
     script:
     - pip install .
     - python -m docere.cli render --knowledge-repo tests/data/kr
-    skip_cleanup: true
-  - stage: deploy
-    #if: repo = harterrt/docere AND branch = master AND type = push
-    script:
     - pip install awscli
     - aws s3 cp --recursive output/ s3://docere-test/ --acl "public-read"
     skip_cleanup: true
