@@ -12,6 +12,10 @@ jobs:
     after_success:
     - codecov
   - stage: deploy
+    on:
+      repo: harterrt/docere
+      branch: master
+      condition: $TRAVIS_PULL_REQUEST == “false”
     script:
     - pip install awscli
     - pip install .
