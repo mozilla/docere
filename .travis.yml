@@ -10,8 +10,7 @@ jobs:
   - stage: test
     cache: pip
     script:
-    - echo Passed!
-#   - tox -e $TOX_ENV
+    - tox -e $TOX_ENV
     after_success:
     - codecov
   - stage: deploy
