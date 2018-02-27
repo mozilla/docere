@@ -2,20 +2,17 @@ language: python
 stages:
   - test
   - deploy
-
-test:
-  env:
-  - TOX_ENV=py34
-  - TOX_ENV=py27
-  - TOX_ENV=flake8
-  cache: pip
-  install:
-  - pip install tox-travis codecov
-  script:
-  - echo Passes!
-  after_success:
-  - codecov
-
+env:
+- TOX_ENV=py34
+- TOX_ENV=py27
+- TOX_ENV=flake8
+cache: pip
+install:
+- pip install tox-travis codecov
+script:
+- echo Passes!
+after_success:
+- codecov
 deploy:
   provider: s3
   access_key_id:
