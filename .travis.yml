@@ -16,6 +16,7 @@ jobs:
     script:
     - pip install .
     - python -m docere.cli render --knowledge-repo tests/data/kr
+    - ls output/
     local_dir: output
     provider: s3
     bucket: docere-test
