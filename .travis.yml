@@ -13,4 +13,8 @@ after_success:
 jobs:
   include:
     - stage: deploy
-      script: echo DEPLOY
+      # on:
+      #   branch: master
+      #   repo: harterrt/docere
+      #   condition: "$TRAVIS_PULL_REQUEST" = "false"
+      script: python -m docere.cli render --knowledge-repo tests/data/kr && ls
