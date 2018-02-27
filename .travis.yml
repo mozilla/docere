@@ -15,10 +15,7 @@ jobs:
     after_success:
     - codecov
   - stage: deploy
-    on:
-      repo: harterrt/docere
-      branch: master
-      condition: $TRAVIS_PULL_REQUEST == "false"
+    if: type = push AND repo = harterrt/docere AND branch = master
     script:
     - echo $TRAVIS_PULL_REQUEST
     - echo $TRAVIS_PULL_REQUEST == "false"
