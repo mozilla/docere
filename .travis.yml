@@ -1,7 +1,8 @@
 language: python
-stages:
-  - test
-  - deploy
+jobs:
+  stages:
+    - test
+    - deploy
 env:
 - TOX_ENV=py34
 - TOX_ENV=py27
