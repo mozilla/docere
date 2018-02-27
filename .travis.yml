@@ -1,12 +1,23 @@
 language: python
-env:
- - TOX_ENV=py34
- - TOX_ENV=py27
- - TOX_ENV=flake8
-cache: pip
 install:
-  - pip install tox-travis codecov
+- pip install tox-travis codecov
+env:
+- TOX_ENV=py34
+- TOX_ENV=py27
+- TOX_ENV=flake8
+cache: pip
 script:
-  - tox -e $TOX_ENV
+- tox -e $TOX_ENV
 after_success:
 - codecov
+jobs:
+  include:
+  - stage: deploy
+    script:
+    - pip install .
+    - python -m docere.cli render --knowledge-repo tests/data/kr
+    deploy: &s3
+      provider: s3
+      local_dir: output
+      bucket: docere-test
+      acl: public_read
