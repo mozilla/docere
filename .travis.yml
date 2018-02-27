@@ -1,6 +1,7 @@
 language: python
 install:
 - pip install tox-travis codecov
+cache: pip
 env:
 - TOX_ENV=py34
 - TOX_ENV=py27
@@ -8,13 +9,12 @@ env:
 jobs:
   include:
   - stage: test
-    cache: pip
     script:
     - tox -e $TOX_ENV
     after_success:
     - codecov
   - stage: deploy
-    #if: type = push AND repo = harterrt/docere AND branch = master
+    if: type = push AND repo = harterrt/docere AND branch = master
     script:
     - echo $TRAVIS_PULL_REQUEST
     - echo $TRAVIS_PULL_REQUEST == "false"
