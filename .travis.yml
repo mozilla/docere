@@ -16,8 +16,5 @@ jobs:
     - pip install awscli
     - pip install .
     - python -m docere.cli render --knowledge-repo tests/data/kr
-    - aws s3 cp --recursive output/ s3://docere-test/
+    - aws s3 cp --recursive output/ s3://docere-test/ --acl "public-read"
     skip_cleanup: true
-    access_key_id: AKIAIWS75WFDTIQQVFNQ
-    secret_access_key:
-      secure: VyNr1NCWagM6owQ4PIIUCkz8V57mg/jKeXGWRwUcdTOdqRcPCHsb03UT8tMU9HsxMCzusUGz4H/uhu3jxGijk5lPgMWuM5BBEFWTAGqHycLs8MX8JeXuKcJTwDow1+aVq1CNLh12G34Hgaz577ADk34FaISLcqRjlhXiCMGejm3D140BcjMnn/FxDuF8LjM6ocEXQUW8Ew6GPdz6VQZZFBVHd5ZTG/yWb0yk6GT2E6FOBBcH7crrkCUYdT5gfOZpUJI1jUpLBtcT8Xinxo3SMAYjlhBU313B593o+f9VO+Mv3xe4zHDX1syTBi3ouTM+63WyH1fhzAdJ64fPRxod9DaDLK4bthKcXj/949WLkxXP37a1yHHtPucMl3FoAOrswS0yB2REdufBDMgXyJxxF2LMGpswt0A///uGRtZgI7LTXDh+Hbzghs1NeGbv0zgbg9phHm2s8/FcjtqyQS+FYyFSDJctEJgJnFQ5SFKwocYjp/UqqMor7qD0EVen1dGgmG3F7+/NL3mkKvLzpOihzEf/6Rj/jB4wrrKFvHh8TZELeNgNaxkTBnLjkXiwXi52u5TkG+wgHtnNLmMRjEm2pwPgbTLPQT1DMmgVnwrxpCwuljQRUGXNc16OGHgoHXWEWj1pInQtmERIL1KUGIxlBf92MmoaxERZz7k/9T9dcXw=
