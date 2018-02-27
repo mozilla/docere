@@ -14,7 +14,7 @@ jobs:
     after_success:
     - codecov
   - stage: deploy
-    if: type = push AND repo = harterrt/docere AND branch = master
+    #if: type = push AND repo = harterrt/docere AND branch = master
     script:
     - echo $TRAVIS_PULL_REQUEST
     - echo $TRAVIS_PULL_REQUEST == "false"
