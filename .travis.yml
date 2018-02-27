@@ -1,4 +1,5 @@
 language: python
+
 install:
 - pip install tox-travis codecov
 cache: pip
@@ -6,20 +7,20 @@ env:
 - TOX_ENV=py34
 - TOX_ENV=py27
 - TOX_ENV=flake8
+script:
+- tox -e $TOX_ENV
+after_success:
+- codecov
+
 jobs:
   include:
-  - stage: test
+  - stage: build
     script:
-    - tox -e $TOX_ENV
-    after_success:
-    - codecov
-  - stage: deploy
-    if: type = push AND repo = harterrt/docere AND branch = master
-    script:
-    - echo $TRAVIS_PULL_REQUEST
-    - echo $TRAVIS_PULL_REQUEST == "false"
-    - pip install awscli
     - pip install .
     - python -m docere.cli render --knowledge-repo tests/data/kr
+  - stage: deploy
+    #if: type = push AND repo = harterrt/docere AND branch = master
+    - ls --recursive output
+    - pip install awscli
     - aws s3 cp --recursive output/ s3://docere-test/ --acl "public-read"
     skip_cleanup: true
