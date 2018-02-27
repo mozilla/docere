@@ -1,12 +1,12 @@
 language: python
+install:
+- pip install tox-travis codecov
 jobs:
   include:
   - stage: test
     env:
     - TOX_ENV=py34
     cache: pip
-    install:
-    - pip install tox-travis codecov
     script:
     - echo Passes!
     after_success:
@@ -17,6 +17,7 @@ jobs:
     - python -m docere.cli render --knowledge-repo tests/data/kr
     skip_cleanup: true
   - stage: deploy
+    skip_cleanup: true
     provider: s3
     access_key_id: AKIAIWS75WFDTIQQVFNQ
     secret_access_key:
