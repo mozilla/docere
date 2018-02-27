@@ -12,10 +12,12 @@ after_success:
 - codecov
 jobs:
   include:
-  - stage: deploy
+  - stage: build
     script:
     - pip install .
     - python -m docere.cli render --knowledge-repo tests/data/kr
+    skip_cleanup: true
+  - stage: deploy
     provider: s3
     access_key_id: 
       secure: Gvl0q7nXuCDT9IlY3FOQn640srhory5oZNXhzwOvpaUAhIqdDNlhejKq7sCnIVrv3EsOibaTn/9j0Q/3h2X0BpeFdeQMNXhu9Yx/IG2cg7mefFE/tP4B+mkvXTAq2ZIVkfoxqAFE25Y9L26RAqm2zWANfr+XEWnnU4jnowRbc6+z5vV7dAJ7DJwmMBssZptMQw/0FuXpM7ZRh8ZMUANTqCMYVlm4Ft2lASb6B5pqpdGdbePdurGDm7njDu5dsBBliZecBMXA7FRItw/LKJBqr+XsvrTj0fBmSv7Ua6rKtlYinn/LVG32EygXhGVB95JtK+o8THdGe84iiAmJyXAUIRMjWFbNJDVlFYyGdHKfqdRv1vvjteVWLfY9aUpo34wuBl3q75y0v5X4YsvIKpIiEs7HvqaymUMbVzJ9MrdSaeBEka2/Y2zqSJrgsZ8dFoTn1J0Ap2jE4iaKqiJ6q9KP8UgC9w2d2amskjjywI4ZFhq75nJ4NUklA9hmonuleGxikM/6nzLgugDqA2Vr7tkz/lH2KyJ5g8D8UdAtW83a0leNgKZhhW/XvC9xskt81eZVnXUue/EmhM98S5zI7EvfITw8YHnq9q0ADPQj74IrSHEWM+8rLb1fKByYe/RyPdTc5nZUJVqlYDomhVjXNDzWc+9CL/JBOb815bszDY//fgU=
