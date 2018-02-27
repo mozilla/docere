@@ -1,7 +1,18 @@
 language: python
+install:
+- pip install tox-travis codecov
+cache: pip
+env:
+- TOX_ENV=py34
+- TOX_ENV=py27
+- TOX_ENV=flake8
 jobs:
   include:
   - stage: test
+    script:
+    - tox -e $TOX_ENV
+    after_success:
+    - codecov
   - stage: build
     script:
     - pip install .
@@ -12,16 +23,3 @@ jobs:
     - pip install awscli
     - aws s3 cp --recursive output/ s3://docere-test/ --acl "public-read"
     skip_cleanup: true
-
-install:
-- pip install tox-travis codecov
-cache: pip
-env:
-- TOX_ENV=py34
-- TOX_ENV=py27
-- TOX_ENV=flake8
-script:
-- tox -e $TOX_ENV
-after_success:
-- codecov
-
