@@ -84,3 +84,17 @@ so it should be easy to roll your own interface if you so desire!
 * Spec out report-level metadata
 
 [knowledge-repo]: https://github.com/airbnb/knowledge-repo
+
+# Appendix
+
+_Why_ are you building _another_ static site generator, Ryan?
+Why!
+
+I just couldn't find any other static site generator
+that let's the analyst have total control over the report.
+For example, checkout
+[this prototype using pelican](https://github.com/harterrt/dpel).
+We're storing HTML files,
+but everything is squeezed into the default pelican theme.
+I decided it would take more work to build a minimal template for pelican
+than to just start over.

@@ -1,6 +1,9 @@
+.*
 *.pyc
 .coverage
 
+.pytest_cache/
+output/
 .cache/
 .tox/
 dist/
