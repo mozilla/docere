@@ -14,13 +14,8 @@ jobs:
     after_success:
     - codecov
   - stage: deploy
-    on:
-      repo: harterrt/docere
-      branch: master
-      condition: $TRAVIS_PULL_REQUEST == "false"
+    if: repo = harterrt/docere AND branch = master AND type = push
     script:
-    - echo $TRAVIS_PULL_REQUEST
-    - echo $TRAVIS_PULL_REQUEST == "false"
     - pip install awscli
     - pip install .
     - python -m docere.cli render --knowledge-repo tests/data/kr
