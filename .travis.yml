@@ -13,7 +13,7 @@ after_success:
 jobs:
   include:
   - stage: deploy
-    #if: repo = harterrt/docere AND branch = master AND type = push
+    if: repo = harterrt/docere AND branch = master AND type = push
     script:
     - pip install awscli
     - pip install .
