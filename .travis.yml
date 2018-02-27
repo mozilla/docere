@@ -2,20 +2,18 @@ language: python
 install:
 - pip install tox-travis codecov
 env:
-  matrix:
-  - TOX_ENV=py34
-  - TOX_ENV=py27
-  - TOX_ENV=flake8
+- TOX_ENV=py34
+- TOX_ENV=py27
+- TOX_ENV=flake8
+cache: pip
+script:
+- tox -e $TOX_ENV
+after_success:
+- codecov
 jobs:
   include:
-  - stage: test
-    cache: pip
-    script:
-    - tox -e $TOX_ENV
-    after_success:
-    - codecov
   - stage: deploy
-    if: repo = harterrt/docere AND branch = master AND type = push
+    #if: repo = harterrt/docere AND branch = master AND type = push
     script:
     - pip install awscli
     - pip install .
