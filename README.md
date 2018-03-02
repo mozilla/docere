@@ -12,27 +12,58 @@ Docere sounds like "dose air"
 * Changes to reports should be tracked,
   but reproducibility is the responsibility of the analyst not the tool
 
-# Workflow
+# High Level Workflow
+
+## Generate a report
 
 Docere starts with a `report` representing an analysis or a unit of knowledge.
 An analyst can generate their report using any tools they like.
 The only requirement is that their analysis result in a static HTML document.
 
+## Submit report to a knowledge-repo
+
 All reports are stored in a central git repository, called the `knowledge repository`.
 To submit a new report,
 an analyst should open a pull request against the knowledge repository.
 The report should be stored as an `index.html` in an appropriately named directory.
+
+Add a `report.json` file next to the `index.html` file so docere knows it's a report.
+The `report.json` file is technically optional.
+Docere will still include your report in the rendered documentation.
+However, your report will not be included in any of the metadata pages
+so your report will be difficult to find.
+
+At a minimum, your `report.json` file should include the following fields:
+
+* title: The title of the report
+* publish_date: YYYY-MM-DD format
+* author: The author's name
+
 If desired, this is the time to get review for the analysis.
 
-When the PR is merged, a static site generator will:
+## Render content
 
-* Gather all of the reports from the `knowledge repository`
+You should configure CI to trigger docere when PRs are merged to master.
+Docere will then:
+
+* Copy the knowledge-repo to a new directory named `output`
+* Gather metadata for all the known reports
 * Generate the necessary `metadata pages`
-* Upload the `reports` and `metadata pages` to a protected S3 bucket
 
 `Metadata pages` are auto-generated documents produced to make reports more discoverable.
 For example, Docere will generate a homepage that lists all reports in anti-chronological order.
 Other `metadata pages` could include: RSS feeds, topic pages, or reports by a specific contributor.
+
+I intend most metadata generators be implemented as plugins to this system.
+For now, I'm including some very simple metadata generators by default.
+
+## Upload content
+
+Docere does not handle uploading the rendered site to a server.
+We recommend configuring this through your CI provider.
+We've included an example `.travis.yml` in this repository.
+You can view the rendered documentation 
+[here](http://docere-test.s3-website-us-east-1.amazonaws.com/)
 
 # Advantages and Weaknesses
 
@@ -77,13 +108,13 @@ so it should be easy to roll your own interface if you so desire!
 ## 2018-Q1
 
 * Scope out ideal workflow (done!)
-* Implement the upload-to-S3 tooling
-* Add CI for automatically deploying the static site
-* Add access control to the S3 bucket
-* Add tooling for a metadata page with a report index
-* Spec out report-level metadata
+* Implement the upload-to-S3 tooling (done! Use travis)
+* Add CI for automatically deploying the static site (done! see .travis.yml)
+* Add tooling for a metadata page with a report index (done!)
+* Spec out report-level metadata (done!)
+* Add access control to the S3 bucket 
+  (See: [Bug 1439982](https://bugzilla.mozilla.org/show_bug.cgi?id=1439982))
 
-[knowledge-repo]: https://github.com/airbnb/knowledge-repo
 
 # Appendix
 
@@ -98,3 +129,5 @@ We're storing HTML files,
 but everything is squeezed into the default pelican theme.
 I decided it would take more work to build a minimal template for pelican
 than to just start over.
+
+[knowledge-repo]: https://github.com/airbnb/knowledge-repo

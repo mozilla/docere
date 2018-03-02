@@ -1,8 +1,8 @@
 <h1>Report Index</h1>
 
 <ul>
-{% for post in posts %}
-  <li><a href="{{post.path}}">{{post.title}}</a> ({{post.publish_date}})</li>
+{% for report in reports %}
+  <li><a href="{{report.path}}">{{report.title}}</a> ({{report.publish_date}})</li>
 {% endfor %}
 </ul>
 

@@ -1,16 +1,16 @@
-from docere.render import _get_posts, tmp_cd
+from docere.render import _get_reports, tmp_cd
 import os
 
 
-def compare_post_lists(this, that):
+def compare_report_lists(this, that):
     return (
-        all([post in this for post in that]) and
-        all([post in that for post in this])
+        all([report in this for report in that]) and
+        all([report in that for report in this])
     )
 
 
-def test_get_posts():
-    actual = _get_posts('tests/data/kr')
+def test_get_reports():
+    actual = _get_reports('tests/data/kr')
     expected = [
         {
             "title": "Crash Count",
@@ -30,7 +30,7 @@ def test_get_posts():
         },
     ]
 
-    assert compare_post_lists(actual, expected)
+    assert compare_report_lists(actual, expected)
 
 
 def test_tmp_cd():

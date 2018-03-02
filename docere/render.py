@@ -6,27 +6,27 @@ from .index import build_index
 import os
 import json
 
-POST_CONFIG_FILE = 'post.json'
-POST_DEFAULTS = {
+REPORT_CONFIG_FILE = 'report.json'
+REPORT_DEFAULTS = {
     'file': 'index.html'
 }
 
 Directory = namedtuple('Directory', ['path', 'dirnames', 'filenames'])
 
 
-def _load_post_config(directory):
+def _load_report_config(directory):
     """Take Directory object containing a config file and return the contents
 
     Returns a dictionary containing the config contents. The only guarunteed
-    keys are "path" and any keys listed in POST_DEFAULTS
+    keys are "path" and any keys listed in REPORT_DEFAULTS
     """
     # Load config File
-    config_path = os.path.join(directory.path, POST_CONFIG_FILE)
+    config_path = os.path.join(directory.path, REPORT_CONFIG_FILE)
     with open(config_path, 'r') as infile:
         config = json.load(infile)
 
     # Set defaults
-    out = POST_DEFAULTS.copy()
+    out = REPORT_DEFAULTS.copy()
     for (key, value) in config.items():
         out[key] = value
 
@@ -37,12 +37,12 @@ def _load_post_config(directory):
     return out
 
 
-def _get_posts(path='.'):
+def _get_reports(path='.'):
     return (
         seq(os.walk(path))
         .map(lambda d: Directory(*d))
-        .filter(lambda d: POST_CONFIG_FILE in d.filenames)
-        .map(_load_post_config)
+        .filter(lambda d: REPORT_CONFIG_FILE in d.filenames)
+        .map(_load_report_config)
         .to_list()
     )
 
@@ -67,7 +67,7 @@ def main(kr, outdir):
     rmtree(outdir, ignore_errors=True)
     copytree(kr, outdir)
     with tmp_cd(outdir):
-        posts = _get_posts()
+        reports = _get_reports()
 
         for meta_gen in metadata_generators:
-            meta_gen(posts)
+            meta_gen(reports)

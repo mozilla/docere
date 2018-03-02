@@ -29,7 +29,7 @@ def test_render():
     with isolated_knowledge_repo('tests/data/kr', 'kr'):
         runner.invoke(render, ['--knowledge-repo', 'kr'])
         assert os.path.isfile('output/user_count/index.html')
-        assert os.path.isfile('output/user_count/post.json')
+        assert os.path.isfile('output/user_count/report.json')
 
 
 def test_index():
