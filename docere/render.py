@@ -2,7 +2,7 @@ from collections import namedtuple
 from functional import seq
 from shutil import copytree, rmtree
 from contextlib import contextmanager
-from .index import build_index
+from .plugins.index import build_index
 import os
 import json
 
