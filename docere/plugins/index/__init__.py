@@ -1,8 +1,10 @@
 from jinja2 import Template
 import os
 
+this_dir, this_filename = os.path.split(__file__)
 
-with open('templates/index.html', 'r') as infile:
+
+with open(os.path.join(this_dir, 'templates/index.html'), 'r') as infile:
     TEMPLATE = Template(infile.read())
 
 
