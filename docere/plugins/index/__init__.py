@@ -1,5 +1,4 @@
 from jinja2 import Template
-import shutil
 import os
 
 this_dir, this_filename = os.path.split(__file__)
