@@ -1,0 +1,3 @@
+include README.md
+include tox.ini
+include docere/plugins/index/templates/*
