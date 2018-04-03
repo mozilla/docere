@@ -8,9 +8,11 @@ KR = 'tests/data/kr'
 EARLY_DATE = "2018-01-01"
 LATE_DATE = "2018-02-01"
 
+
 @pytest.fixture
 def reports():
     return(_get_reports(KR))
+
 
 def get_report_order_with_date_change(reports, dates):
     """After changing publish_dates, return index of each report in index.html
@@ -40,6 +42,7 @@ def test_index_ordered(reports):
     order = get_report_order_with_date_change(reports, [LATE_DATE, EARLY_DATE])
 
     assert order[0] < order[1]
+
 
 def test_index_reversed(reports):
     """Reverse reports if in chronological order"""
