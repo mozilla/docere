@@ -1,7 +1,7 @@
 <h1>Report Index</h1>
 
 <ul>
-{% for report in reports %}
+{% for report in reports|sort(attribute='publish_date', reverse=True) %}
   <li><a href="{{report.path}}">{{report.title}}</a> ({{report.publish_date}})</li>
 {% endfor %}
 </ul>
