@@ -1,4 +1,4 @@
 include README.md
 include tox.ini
-include docere/plugins/index/templates/*
-include docere/plugins/index/skeleton/*
+graft docere/plugins/index/templates/
+graft docere/plugins/index/skeleton/

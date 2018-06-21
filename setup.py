@@ -14,7 +14,7 @@ extras = {
 
 setup(
     name='docere',
-    version='0.5',
+    version='0.6',
     description='Tools for publishing analyses as a static site',
     author='Ryan Harter',
     author_email='harterrt@mozilla.com',
