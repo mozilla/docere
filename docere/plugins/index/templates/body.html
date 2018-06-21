@@ -1,12 +1,31 @@
 <h1 style="margin-top:6rem">Report Index</h1>
 
-<ul>
+<table class="u-full-width">
+  <thead>
+    <tr>
+      <th>
+        Title
+      </th>
+      <th>
+        Author
+      </th>
+      <th>
+        Publish Date
+      </th>
+  </thead>
+  <tbody>
 {% for report in reports|sort(attribute='publish_date', reverse=True) %}
-  <li>
-    <a href="{{report.path}}">{{report.title}}</a> -
-    {{report.author}}
-    ({{report.publish_date}})
-  </li>
+    <tr>
+      <td>
+        <a href="{{report.path}}">{{report.title}}</a>
+      </td>
+      <td>
+        {{report.author}}
+      </td>
+      <td>
+        {{report.publish_date}}
+      </td>
+    </tr>
 {% endfor %}
-</ul>
+</tbody>
 
