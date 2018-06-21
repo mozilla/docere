@@ -1,0 +1,12 @@
+<h1 style="margin-top:6rem">Report Index</h1>
+
+<ul>
+{% for report in reports|sort(attribute='publish_date', reverse=True) %}
+  <li>
+    <a href="{{report.path}}">{{report.title}}</a> -
+    {{report.author}}
+    ({{report.publish_date}})
+  </li>
+{% endfor %}
+</ul>
+
