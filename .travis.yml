@@ -16,6 +16,8 @@ jobs:
     skip-cleanup: true
     script:
     - pip install .
+    - ls *
+    - ls docere/plugins/index/templates
     - python -m docere.cli render --knowledge-repo tests/data/kr
     deploy: &s3
       skip-cleanup: true
