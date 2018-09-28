@@ -3,8 +3,10 @@ from functional import seq
 from shutil import copytree, rmtree
 from contextlib import contextmanager
 from .plugins.index import build_index
+from importlib.machinery import SourceFileLoader
 import os
 import json
+import inspect
 
 REPORT_CONFIG_FILE = 'report.json'
 REPORT_DEFAULTS = {
@@ -58,14 +60,32 @@ def tmp_cd(path):
         os.chdir(curdir)
 
 
+def get_metadata_generators():
+    default = [build_index]
+
+    try:
+        module = SourceFileLoader(
+            'local_config',
+            '.docere_config.py'
+        ).load_module()
+
+        return (
+            dict(inspect.getmembers(module))
+            .get('METADATA_GENERATORS', default)
+        )
+
+    except FileNotFoundError as e:
+
+        return default
+
+
 def main(kr, outdir):
-    metadata_generators = [
-        build_index,
-    ]
+    metadata_generators = get_metadata_generators()
 
     # Replace output directory with copy of knowledge repo
     rmtree(outdir, ignore_errors=True)
     copytree(kr, outdir)
+
     with tmp_cd(outdir):
         reports = _get_reports()
 
