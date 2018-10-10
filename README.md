@@ -4,6 +4,17 @@ Docere is a workflow and set of tools for publishing data analyses.
 
 Docere sounds like "dose air"
 
+# Installation
+
+Docere is hosted on PyPI, so is installable via `pip`:
+
+    pip install docere
+
+Once installed, see usage details via:
+
+    docere --help
+    docere render --help
+
 # Design Principles
 
 * Analysts should have total control of their report presentation

@@ -20,6 +20,11 @@ setup(
     author_email='harterrt@mozilla.com',
     url='https://github.com/harterrt/docere.git',
     packages=find_packages(exclude=['tests']),
+    entry_points={
+        'console_scripts': [
+            'docere = docere.cli:cli'
+        ]
+    },
     include_package_data=True,
     install_requires=[
         'pyfunctional',
