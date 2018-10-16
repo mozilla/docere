@@ -20,7 +20,7 @@
         <a href="{{report.path}}">{{report.title}}</a>
       </td>
       <td>
-        {{report.author}}
+        {{report.author}}{{ report.authors|join(', ') }}
       </td>
       <td>
         {{report.publish_date}}
