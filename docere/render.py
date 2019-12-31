@@ -5,6 +5,7 @@ from contextlib import contextmanager
 from .plugins.index import build_index
 import os
 import json
+import sys
 
 REPORT_CONFIG_FILE = 'report.json'
 REPORT_DEFAULTS = {
@@ -62,6 +63,12 @@ def main(kr, outdir):
     metadata_generators = [
         build_index,
     ]
+
+    abs_kr = os.path.abspath(kr)
+    abs_outdir = os.path.abspath(outdir)
+    if os.path.commonprefix([abs_kr, abs_outdir]) == abs_kr:
+        print("Outdir cannot be a child of the repository.", file=sys.stderr)
+        sys.exit(1)
 
     # Replace output directory with copy of knowledge repo
     rmtree(outdir, ignore_errors=True)
