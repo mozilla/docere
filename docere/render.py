@@ -1,5 +1,4 @@
 from collections import namedtuple
-from functional import seq
 from shutil import copytree, rmtree
 from contextlib import contextmanager
 from .plugins.index import build_index
@@ -39,13 +38,10 @@ def _load_report_config(directory):
 
 
 def _get_reports(path='.'):
-    return (
-        seq(os.walk(path))
-        .map(lambda d: Directory(*d))
-        .filter(lambda d: REPORT_CONFIG_FILE in d.filenames)
-        .map(_load_report_config)
-        .to_list()
-    )
+    dirs = (Directory(*d) for d in os.walk(path))
+    with_config = (d for d in dirs if REPORT_CONFIG_FILE in d.filenames)
+    reports = [_load_report_config(d) for d in with_config]
+    return reports
 
 
 @contextmanager
