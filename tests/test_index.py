@@ -49,3 +49,11 @@ def test_index_reversed(reports):
     order = get_report_order_with_date_change(reports, [EARLY_DATE, LATE_DATE])
 
     assert order[1] < order[0]
+
+
+def test_abstract(reports):
+    with isolated_knowledge_repo(KR, 'kr'):
+        build_index(reports)
+        with open('index.html', 'r') as infile:
+            contents = infile.read()
+    assert "Lorem ipsum" in contents
