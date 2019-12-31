@@ -13,8 +13,8 @@
         Publish Date
       </th>
   </thead>
-  <tbody>
 {% for report in reports|sort(attribute='publish_date', reverse=True) %}
+  <tbody>
     <tr>
       <td>
         <a href="{{report.path}}">{{report.title}}</a>
@@ -26,6 +26,12 @@
         {{report.publish_date}}
       </td>
     </tr>
+    {% if report.abstract %}
+    <tr>
+      <td colspan="3">
+        {{report.abstract}}
+      </td>
+    </tr>
+    {% endif %}
+  </tbody>
 {% endfor %}
-</tbody>
-
