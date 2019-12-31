@@ -50,6 +50,8 @@ At a minimum, your `report.json` file should include the following fields:
 * `publish_date`: YYYY-MM-DD format
 * `author`: The author's name
 
+You can optionally specify an `abstract` key, which will be rendered in the TOC.
+
 If desired, this is the time to get review for your analysis.
 
 ## Render content
@@ -73,7 +75,7 @@ For now, I'm including some very simple `metadata generators` by default.
 Docere does not handle uploading the rendered site to a server.
 We recommend configuring this through your CI provider.
 We've included an example `.travis.yml` in this repository.
-You can view the rendered documentation 
+You can view the rendered documentation
 [here](http://docere-test.s3-website-us-east-1.amazonaws.com/).
 
 # Advantages and Weaknesses
@@ -123,13 +125,13 @@ so it should be easy to roll your own interface if you so desire!
 * Add CI for automatically deploying the static site (done! see .travis.yml)
 * Add tooling for a metadata page with a report index (done!)
 * Spec out report-level metadata (done!)
-* Add access control to the S3 bucket 
+* Add access control to the S3 bucket
   (See: [Bug 1439982](https://bugzilla.mozilla.org/show_bug.cgi?id=1439982))
 
 
 # Appendix
 
-## FAQ 
+## FAQ
 
 ### Another static site generator?
 
@@ -168,7 +170,7 @@ Now imagine if that config needed to reside inside the HTML file.
 For docere's purposes, these formats are very similar.
 
 The `report.json` files get copied to the rendered directory as well.
-I expect it will be useful to reference the report.html file for a given report. 
+I expect it will be useful to reference the report.html file for a given report.
 Browsers generally understand what a JSON file is
 and do a good job of displaying the contents.
 This is not true of YAML or INI
