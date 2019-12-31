@@ -19,6 +19,7 @@ def test_get_reports():
             "file": "not_index.html",
             "path": "tests/data/kr/crash_count/not_index.html",
             "dir": "tests/data/kr/crash_count",
+            "abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
         },
         {
             "title": "User Count",
