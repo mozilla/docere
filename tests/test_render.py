@@ -29,6 +29,15 @@ def test_get_reports():
             "path": "tests/data/kr/user_count/index.html",
             "dir": "tests/data/kr/user_count",
         },
+        {
+            "title": "Mozilla Manifesto",
+            "publish_date": "2018-01-01",
+            "author": "Mitchell Baker",
+            "file": "index.html",
+            "link": "https://www.mozilla.org/en-US/about/manifesto/",
+            "path": "https://www.mozilla.org/en-US/about/manifesto/",
+            "abstract": "The open, global internet is the most powerful communication and collaboration resource we have ever seen."
+        }
     ]
 
     assert compare_report_lists(actual, expected)

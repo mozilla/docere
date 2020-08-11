@@ -29,20 +29,17 @@ Once installed, see usage details via:
 
 Docere starts with a `report` representing an analysis or a unit of knowledge.
 An analyst can generate their report using any tools they like.
-The only requirement is that their analysis result in a static HTML document.
+The only requirement is that their analysis result in a static HTML document,
+or has a URL.
 
 ## Submit report to a knowledge-repo
 
 All reports are stored in a central git repository, called the `knowledge repository`.
 To submit a new report,
 open a pull request against the knowledge repository.
-Store your report as an `index.html` file in an appropriately named directory.
 
-Add a `report.json` file next to the `index.html` file so docere knows it's a report.
-The `report.json` file is technically optional.
-Docere will still include your report in the rendered documentation.
-However, your report will not be included in any of the metadata pages
-so your report will be difficult to find.
+Create a directory with a `report.json` file.
+If you need a place to serve your report, include it in your pull request.
 
 At a minimum, your `report.json` file should include the following fields:
 
@@ -50,9 +47,12 @@ At a minimum, your `report.json` file should include the following fields:
 * `publish_date`: YYYY-MM-DD format
 * `author`: The author's name
 
-You can optionally specify an `abstract` key, which will be rendered in the TOC.
+Fields that may be optional are:
 
-If desired, this is the time to get review for your analysis.
+* `link`: a URL for an external report
+* `abstract`: an abstract to be rendered in the TOC
+
+If desired, this is an opportunity to get review for your analysis.
 
 ## Render content
 

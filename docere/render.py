@@ -30,9 +30,12 @@ def _load_report_config(directory):
     for (key, value) in config.items():
         out[key] = value
 
-    # Add directory in which config file was found
-    out['dir'] = directory.path
-    out['path'] = os.path.join(directory.path, out['file'])
+    if 'link' in config:
+        out['path'] = config['link']
+    else:
+        # Add directory in which config file was found
+        out['dir'] = directory.path
+        out['path'] = os.path.join(directory.path, out['file'])
 
     return out
 
