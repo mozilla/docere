@@ -29,6 +29,7 @@ setup(
     install_requires=[
         'jinja2',
         'click',
+        'toml',
     ],
     tests_require=test_deps,
     extras_require=extras,
