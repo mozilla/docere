@@ -1,11 +1,11 @@
 language: python
 python:
-- 3.4
+- 3.8
 install:
 - pip install tox-travis codecov
 env:
-- TOX_ENV=py34
-- TOX_ENV=py35
+- TOX_ENV=py38
+- TOX_ENV=py39
 - TOX_ENV=flake8
 cache: pip
 script:
