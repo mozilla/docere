@@ -37,7 +37,23 @@ def test_get_reports():
             "link": "https://www.mozilla.org/en-US/about/manifesto/",
             "path": "https://www.mozilla.org/en-US/about/manifesto/",
             "abstract": "The open, global internet is the most powerful communication and collaboration resource we have ever seen."
-        }
+        },
+        {
+            "title": "My First TOML Report",
+            "publish_date": "2018-01-02",
+            "author": "Tom",
+            "file": "index.html",
+            "path": "tests/data/kr/toml_report/index.html",
+            "dir": "tests/data/kr/toml_report",
+        },
+        {
+            "title": "Just Another JSON Report",
+            "publish_date": "2018-01-02",
+            "author": "Joe Blow",
+            "file": "index.html",
+            "path": "tests/data/kr/json_toml_report/index.html",
+            "dir": "tests/data/kr/json_toml_report",
+        },
     ]
 
     assert compare_report_lists(actual, expected)

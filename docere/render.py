@@ -6,7 +6,9 @@ import os
 import json
 import sys
 
-REPORT_CONFIG_FILE = 'report.json'
+import toml
+
+REPORT_CONFIG_FILES = {'report.json': json.load, 'report.toml': toml.load}
 REPORT_DEFAULTS = {
     'file': 'index.html'
 }
@@ -21,9 +23,13 @@ def _load_report_config(directory):
     keys are "path" and any keys listed in REPORT_DEFAULTS
     """
     # Load config File
-    config_path = os.path.join(directory.path, REPORT_CONFIG_FILE)
-    with open(config_path, 'r') as infile:
-        config = json.load(infile)
+    for candidate, loader in REPORT_CONFIG_FILES.items():
+        config_path = os.path.join(directory.path, candidate)
+        if not os.path.exists(config_path):
+            continue
+        with open(config_path, 'r') as infile:
+            config = loader(infile)
+        break
 
     # Set defaults
     out = REPORT_DEFAULTS.copy()
@@ -42,7 +48,7 @@ def _load_report_config(directory):
 
 def _get_reports(path='.'):
     dirs = (Directory(*d) for d in os.walk(path))
-    with_config = (d for d in dirs if REPORT_CONFIG_FILE in d.filenames)
+    with_config = (d for d in dirs if set(d.filenames) & set(REPORT_CONFIG_FILES))
     reports = [_load_report_config(d) for d in with_config]
     return reports
 
