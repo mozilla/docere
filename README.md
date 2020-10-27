@@ -159,19 +159,6 @@ Docere is build to be composable,
 so it should be easy to roll your own interface if you so desire!
 
 
-# Roadmap
-
-## 2018-Q1
-
-* Scope out ideal workflow (done!)
-* Implement the upload-to-S3 tooling (done! Use travis)
-* Add CI for automatically deploying the static site (done! see .travis.yml)
-* Add tooling for a metadata page with a report index (done!)
-* Spec out report-level metadata (done!)
-* Add access control to the S3 bucket
-  (See: [Bug 1439982](https://bugzilla.mozilla.org/show_bug.cgi?id=1439982))
-
-
 # Appendix
 
 ## FAQ
