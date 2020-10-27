@@ -195,17 +195,5 @@ copies your report to the knowledge-repo,
 and copies a boilerplate `report.json` config to the right directory.
 Now imagine if that config needed to reside inside the HTML file.
 
-### Buy why JSON? Why not YAML or INI?
-
-For docere's purposes, these formats are very similar.
-
-The `report.json` files get copied to the rendered directory as well.
-I expect it will be useful to reference the report.html file for a given report.
-Browsers generally understand what a JSON file is
-and do a good job of displaying the contents.
-This is not true of YAML or INI
-
-I also had some trouble with PyYAML when testing across different versions of Python.
-
 
 [knowledge-repo]: https://github.com/airbnb/knowledge-repo
