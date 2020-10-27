@@ -40,7 +40,7 @@ open a pull request against the knowledge repository.
 
 Create a directory containing a *metadata file* named `report.json` or `report.toml` file.
 ([TOML] is an INI-like configuration format, which is more flexible than JSON.)
-If you need a place to serve your report, include it in your pull request.
+If you need a place to serve your report, include the rendered HTML report in your pull request.
 
 At a minimum, your metadata file should include the following fields:
 
