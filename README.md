@@ -38,21 +38,64 @@ All reports are stored in a central git repository, called the `knowledge reposi
 To submit a new report,
 open a pull request against the knowledge repository.
 
-Create a directory with a `report.json` file.
+Create a directory containing a *metadata file* named `report.json` or `report.toml` file.
+([TOML] is an INI-like configuration format, which is more flexible than JSON.)
 If you need a place to serve your report, include it in your pull request.
 
-At a minimum, your `report.json` file should include the following fields:
+At a minimum, your metadata file should include the following fields:
 
 * `title`: The title of the report
 * `publish_date`: YYYY-MM-DD format
-* `author`: The author's name
+* `author`: The author's name, or `authors`: an array of author names
 
 Fields that may be optional are:
 
 * `link`: a URL for an external report
 * `abstract`: an abstract to be rendered in the TOC
 
+An identical example in each format:
+
+<table>
+<thead><tr><th>
+
+`report.toml`
+
+</th><th>
+
+`report.json`
+
+</th></tr></thead>
+<tbody><tr>
+<td>
+
+```toml
+# TOML can have comments.
+title = "My Cool Report"
+publish_date = "2020-01-30"
+author = "Mo Zilla"
+# TOML supports multiline strings:
+abstract = """Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."""
+```
+
+</td>
+<td>
+
+```json
+{
+  "title": "My Cool Report",
+  "publish_date": "2020-01-30",
+  "author": "Mo Zilla",
+  "abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+}
+```
+
+</td>
+</tr></tbody></table>
+
 If desired, this is an opportunity to get review for your analysis.
+
+[TOML]: https://toml.io/en/
 
 ## Render content
 
