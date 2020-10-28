@@ -38,21 +38,64 @@ All reports are stored in a central git repository, called the `knowledge reposi
 To submit a new report,
 open a pull request against the knowledge repository.
 
-Create a directory with a `report.json` file.
-If you need a place to serve your report, include it in your pull request.
+Create a directory containing a *metadata file* named `report.json` or `report.toml` file.
+([TOML] is an INI-like configuration format, which is more flexible than JSON.)
+If you need a place to serve your report, include the rendered HTML report in your pull request.
 
-At a minimum, your `report.json` file should include the following fields:
+At a minimum, your metadata file should include the following fields:
 
 * `title`: The title of the report
 * `publish_date`: YYYY-MM-DD format
-* `author`: The author's name
+* `author`: The author's name, or `authors`: an array of author names
 
 Fields that may be optional are:
 
 * `link`: a URL for an external report
 * `abstract`: an abstract to be rendered in the TOC
 
+An identical example in each format:
+
+<table>
+<thead><tr><th>
+
+`report.toml`
+
+</th><th>
+
+`report.json`
+
+</th></tr></thead>
+<tbody><tr>
+<td>
+
+```toml
+# TOML can have comments.
+title = "My Cool Report"
+publish_date = "2020-01-30"
+author = "Mo Zilla"
+# TOML supports multiline strings:
+abstract = """Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."""
+```
+
+</td>
+<td>
+
+```json
+{
+  "title": "My Cool Report",
+  "publish_date": "2020-01-30",
+  "author": "Mo Zilla",
+  "abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+}
+```
+
+</td>
+</tr></tbody></table>
+
 If desired, this is an opportunity to get review for your analysis.
+
+[TOML]: https://toml.io/en/
 
 ## Render content
 
@@ -116,19 +159,6 @@ Docere is build to be composable,
 so it should be easy to roll your own interface if you so desire!
 
 
-# Roadmap
-
-## 2018-Q1
-
-* Scope out ideal workflow (done!)
-* Implement the upload-to-S3 tooling (done! Use travis)
-* Add CI for automatically deploying the static site (done! see .travis.yml)
-* Add tooling for a metadata page with a report index (done!)
-* Spec out report-level metadata (done!)
-* Add access control to the S3 bucket
-  (See: [Bug 1439982](https://bugzilla.mozilla.org/show_bug.cgi?id=1439982))
-
-
 # Appendix
 
 ## FAQ
@@ -164,18 +194,6 @@ starts a branch in the knowledge-repo,
 copies your report to the knowledge-repo,
 and copies a boilerplate `report.json` config to the right directory.
 Now imagine if that config needed to reside inside the HTML file.
-
-### Buy why JSON? Why not YAML or INI?
-
-For docere's purposes, these formats are very similar.
-
-The `report.json` files get copied to the rendered directory as well.
-I expect it will be useful to reference the report.html file for a given report.
-Browsers generally understand what a JSON file is
-and do a good job of displaying the contents.
-This is not true of YAML or INI
-
-I also had some trouble with PyYAML when testing across different versions of Python.
 
 
 [knowledge-repo]: https://github.com/airbnb/knowledge-repo
