@@ -1,3 +1,4 @@
 title = "My First TOML Report"
 publish_date = "2018-01-02"
 author = "Tom"
+tags = ["first_tag"]

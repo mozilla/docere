@@ -45,6 +45,7 @@ def test_get_reports():
             "file": "index.html",
             "path": "tests/data/kr/toml_report/index.html",
             "dir": "tests/data/kr/toml_report",
+            "tags": ["first_tag"]
         },
         {
             "title": "Just Another JSON Report",
