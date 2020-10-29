@@ -25,10 +25,19 @@
       <td>
         {{report.publish_date}}
       </td>
+    </tr>
+    {% if report.tags %}
+    <tr>
+      <td colspan="1">
+        Tags
+      </td>
+    </tr>
+    <tr>
       <td>
         {{report.tags}}
       </td>
     </tr>
+    {% endif %}
     {% if report.abstract %}
     <tr>
       <td colspan="3">
