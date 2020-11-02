@@ -53,6 +53,16 @@ Fields that may be optional are:
 * `link`: a URL for an external report
 * `abstract`: an abstract to be rendered in the TOC
 
+
+The following fields are the set of tags associated with a report. They're designed to be high-level in order to allow for discovery of similar knowledge. Find the set of tags [here](https://docs.google.com/spreadsheets/d/1RAz-0zyVSC-gM8nbxVfdCs0x8Bpz5ydWIR3ZZ6MAr9M/edit?usp=sharing) that can be used for the __product__, __area__ and __artifact__ attributes. The __project__ attribute is a free form tag that allows for work to be grouped under larger, longer term projects. For example, there could be multiple artifacts produced as the result of a major release, such as our recent 81 release named Shirley.
+
+Multiple tags should be represented in list format (see example).
+
+* `product`: the product that the work in the report is associated with
+* `area`: a more descriptive focus area of the product
+* `artifact`: the type of knowledge artifact the report is
+* `project`: if the report falls under an umbrella project, specify here. For now this is a free-form field.
+
 An identical example in each format:
 
 <table>
@@ -76,6 +86,10 @@ author = "Mo Zilla"
 # TOML supports multiline strings:
 abstract = """Lorem ipsum dolor sit amet, consectetur adipiscing elit,
 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."""
+product = "desktop"
+area = ["bookmarks", "accounts"]
+artifact = "experiment"
+project = "project name"
 ```
 
 </td>
@@ -87,6 +101,10 @@ sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."""
   "publish_date": "2020-01-30",
   "author": "Mo Zilla",
   "abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  "product": "desktop",
+  "area": ["bookmarks", "accounts"],
+  "artifact": "experiment",
+  "project": "project name"
 }
 ```
 
