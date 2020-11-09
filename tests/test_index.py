@@ -1,6 +1,8 @@
+import os
+
 from .test_cli import isolated_knowledge_repo
 from docere.render import _get_reports
-from docere.plugins.index import build_index
+from docere.plugins.index import build_index, slugify
 import pytest
 
 
@@ -57,3 +59,17 @@ def test_abstract(reports):
         with open('index.html', 'r') as infile:
             contents = infile.read()
     assert "Lorem ipsum" in contents
+
+
+def test_anchor_link_exists_in_output(reports):
+    with isolated_knowledge_repo(KR, 'kr'):
+        assert not os.path.exists("assets/link.svg")
+        build_index(reports)
+        assert os.path.exists("assets/link.svg")
+        with open('index.html', 'r') as infile:
+            contents = infile.read()
+    assert "a name=" in contents
+
+
+def test_slugify_gives_unique_results(reports):
+    assert len(set(slugify(r) for r in reports)) == len(reports)
