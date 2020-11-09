@@ -2,3 +2,4 @@ include README.md
 include tox.ini
 graft docere/plugins/index/templates/
 graft docere/plugins/index/skeleton/
+graft docere/plugins/index/assets/
