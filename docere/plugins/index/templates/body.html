@@ -18,6 +18,7 @@
     <tr>
       <td>
         <a href="{{report.path}}">{{report.title}}</a>
+        <a name="{{ slugify(report) }}" href="#{{ slugify(report) }}"><img src="assets/link.svg" alt="anchor"></a>
       </td>
       <td>
         {{report.author}}{{ report.authors|join(', ') }}
