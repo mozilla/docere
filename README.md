@@ -100,7 +100,7 @@ project = "project name"
   "title": "My Cool Report",
   "publish_date": "2020-01-30",
   "author": "Mo Zilla",
-  "abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  "abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   "product": "desktop",
   "area": ["bookmarks", "accounts"],
   "artifact": "experiment",
