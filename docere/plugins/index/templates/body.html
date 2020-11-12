@@ -12,15 +12,6 @@
       <th>
         Publish Date
       </th>
-      <th>
-        Product
-      </th>
-      <th>
-        Area
-      </th>
-      <th>
-        Artifact
-      </th>
   </thead>
 {% for report in reports|sort(attribute='publish_date', reverse=True) %}
   <tbody>
@@ -35,22 +26,7 @@
       <td>
         {{report.publish_date}}
       </td>
-    {% if report.product %}
-      <td>
-        {{report.product}}
-      </td>
-    {% endif %}
-    {% if report.area %}
-      <td>
-        {{ report.area|join(', ') }}
-      </td>
-    {% endif %}
-    {% if report.artifact %}
-      <td>
-        {{report.artifact}}
-      </td>
-      </tr>
-    {% endif %}
+    </tr>
     {% if report.abstract %}
     <tr>
       <td colspan="3">
