@@ -34,5 +34,19 @@
       </td>
     </tr>
     {% endif %}
+    <tr class="tag-tray">
+      <td>
+        <span class="tag-label">Product:</span><br>
+        {{ (report.product or ["None"]) | join(",") }}
+      </td>
+      <td>
+        <span class="tag-label">Area:</span><br>
+        {{ (report.area or ["None"]) | join(",") }}
+      </td>
+      <td>
+        <span class="tag-label">Artifact:</span><br>
+        {{report.artifact}}
+      </td>
+    </tr>
   </tbody>
 {% endfor %}
