@@ -13,7 +13,15 @@
         Publish Date
       </th>
   </thead>
+  <!-- check the syntax for inserting an empty list to append content to -->
+  <!-- this is mock code and it's not expected to work right now -->
+<!-- { % tag_list = list()} -->
+<!-- { % topic_list = list()} -->
+{% set tag_list = [] %}
+{% set topic_list = [] %}
 {% for report in reports|sort(attribute='publish_date', reverse=True) %}
+  {{ tag_list.append(report['tags']) if report['tags'] }}
+  {{ topic_list.append(report['topics']) if report['tags'] }}
   <tbody>
     <tr>
       <td>
@@ -50,3 +58,16 @@
     </tr>
   </tbody>
 {% endfor %}
+<!-- give buttons a class name and use CSS to manipulate -->
+<tr class='tag_sidebar'>
+  {% for tag in tag_list %}
+  <button>
+    {{'tag'}}
+  </button>
+  {% endfor %}
+</tr>
+<tr class='topic_sidebar'>
+  {% for topic in topic_list %}
+  <button>{{'topic'}}</button>
+  {% endfor %}
+</tr>
