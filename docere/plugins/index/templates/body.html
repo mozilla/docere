@@ -45,15 +45,27 @@
     <tr class="tag-tray">
       <td>
         <span class="tag-label">Product:</span><br>
-        {{ (report.product or ["None"]) | join(",") }}
+        {% if report.product is string %}
+          {{ ([report.product] or ["None"]) | join(",") }}
+        {% elif report.product is not string and report.product is iterable %}
+        {{ report.product | join(",") }}
+        {% endif %}
       </td>
       <td>
         <span class="tag-label">Area:</span><br>
-        {{ (report.area or ["None"]) | join(",") }}
+        {% if report.area is string %}
+          {{ ([report.area] or ["None"]) | join(",") }}
+        {% elif report.area is not string and report.area is iterable %}
+        {{ report.area | join(",") }}
+        {% endif %}
       </td>
       <td>
         <span class="tag-label">Artifact:</span><br>
-        {{report.artifact}}
+        {% if report.artifact is string %}
+          {{ ([report.artifact] or ["None"]) | join(",") }}
+        {% elif report.artifact is not string and report.artifact is iterable %}
+        {{ report.artifact | join(",") }}
+        {% endif %}
       </td>
     </tr>
   </tbody>
