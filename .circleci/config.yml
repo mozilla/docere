@@ -1,13 +1,15 @@
 version: 2.1
 
-test_template: &test_template
-  steps:
-    - checkout
-    - run:
-        name: Run tox
-        command: |
-          pip install -U tox
-          tox -e ${CIRCLE_JOB}
+templates:
+  - &default_python "cimg/python:3.8"
+  - test_template: &test_template
+      steps:
+        - checkout
+        - run:
+            name: Run tox
+            command: |
+              pip install -U tox
+              tox -e ${CIRCLE_JOB}
 
 orbs:
   s3: circleci/aws-s3@2.0.0
@@ -21,6 +23,10 @@ jobs:
     <<: *test_template
     docker:
       - image: cimg/python:3.9
+  flake8:
+    <<: *test_template
+    docker:
+      - image: *default_python
   deploy_demo:
     steps:
       - checkout
@@ -36,13 +42,13 @@ jobs:
           from: output
           to: docere-test
     docker:
-      - image: cimg/python:3.8
-
+      - image: *default_python
 
 workflows:
   version: 2
   build:
     jobs:
+      - flake8
       - py38
       - py39
       - deploy_demo:
