@@ -1,0 +1,40 @@
+version: 2.1
+
+test_template: &test_template
+  steps:
+    - checkout
+    - run:
+        name: Run tox
+        command: |
+          pip install -U tox
+          tox -e ${CIRCLE_JOB}
+
+jobs:
+  py38:
+    <<: *test_template
+    docker:
+      - image: python:3.8
+  py39:
+    <<: *test_template
+    docker:
+      - image: python:3.9
+  deploy:
+    steps:
+      - checkout
+      - run:
+          name: Build
+          command: python setup.py sdist bdist_wheel
+      - run:
+          name: Deploy
+          command: |
+            pip install -U twine
+            twine upload dist/*
+    docker:
+      - image: python:3.8
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - py38
+      - py39
