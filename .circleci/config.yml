@@ -9,28 +9,35 @@ test_template: &test_template
           pip install -U tox
           tox -e ${CIRCLE_JOB}
 
+orbs:
+  s3: circleci/aws-s3@2.0.0
+
 jobs:
   py38:
     <<: *test_template
     docker:
-      - image: python:3.8
+      - image: cimg/python:3.8
   py39:
     <<: *test_template
     docker:
-      - image: python:3.9
-  deploy:
+      - image: cimg/python:3.9
+  deploy_demo:
     steps:
       - checkout
       - run:
-          name: Build
-          command: python setup.py sdist bdist_wheel
-      - run:
-          name: Deploy
+          name: "Run Docere"
           command: |
-            pip install -U twine
-            twine upload dist/*
+            pip install .
+            docere render --knowledge-repo tests/data/kr
+      - s3/sync:
+          arguments: |
+            --acl public-read \
+            --delete
+          from: output
+          to: docere-test
     docker:
-      - image: python:3.8
+      - image: cimg/python:3.8
+
 
 workflows:
   version: 2
@@ -38,3 +45,9 @@ workflows:
     jobs:
       - py38
       - py39
+      - deploy_demo:
+          filters:
+            branches:
+              only:
+                - master
+                - main
