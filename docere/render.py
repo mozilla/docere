@@ -30,9 +30,14 @@ def _load_report_config(directory):
         with open(config_path, 'r') as infile:
             config = loader(infile)
         break
+    else:
+        raise ValueError(
+            f"Thought there was a valid config file in {directory} but couldn't find one"
+        )
 
     # Set defaults
     out = REPORT_DEFAULTS.copy()
+    out['source'] = config_path
     for (key, value) in config.items():
         out[key] = value
 
