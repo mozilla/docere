@@ -36,7 +36,7 @@ def test_get_reports():
             "file": "index.html",
             "link": "https://www.mozilla.org/en-US/about/manifesto/",
             "path": "https://www.mozilla.org/en-US/about/manifesto/",
-            "abstract": "The open, global internet is the most powerful communication and collaboration resource we have ever seen."
+            "abstract": "The open, global internet is the most powerful communication and collaboration resource we have ever seen."  # noqa:E501
         },
         {
             "title": "My First TOML Report",
