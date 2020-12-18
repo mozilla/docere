@@ -41,7 +41,7 @@ jobs:
             --acl public-read \
             --delete
           from: output
-          to: docere-test
+          to: s3://docere-test
     docker:
       - image: *default_python
 
