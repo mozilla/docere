@@ -8,8 +8,9 @@ templates:
         - run:
             name: Run tox
             command: |
-              pip install -U tox
+              pip install -U tox codecov
               tox -e ${CIRCLE_JOB}
+              codecov
 
 orbs:
   s3: circleci/aws-s3@2.0.0
