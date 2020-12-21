@@ -38,9 +38,16 @@ All reports are stored in a central git repository, called the `knowledge reposi
 To submit a new report,
 open a pull request against the knowledge repository.
 
-Create a directory containing a *metadata file* named `report.json` or `report.toml` file.
+You can add your report in either of two ways.
+
+If you need to **use Docere to host HTML**, you should
+create a directory containing a *metadata file* named `report.json` or `report.toml` file.
 ([TOML] is an INI-like configuration format, which is more flexible than JSON.)
-If you need a place to serve your report, include the rendered HTML report in your pull request.
+The rendered HTML should go in the same directory.
+
+If you want to link to **a report that's hosted somewhere else**, like Google Docs,
+then add a .toml or .json file with any name to the external reports directory
+configured for your repository. It's probably named `external`.
 
 At a minimum, your metadata file should include the following fields:
 
