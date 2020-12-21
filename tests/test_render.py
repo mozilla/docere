@@ -1,4 +1,4 @@
-from docere.render import _get_reports, tmp_cd
+from docere.render import _get_reports, _get_external_reports, tmp_cd
 import os
 
 
@@ -13,6 +13,7 @@ def contains_at_least(actual, expected):
     assert len(actual_by_source) == len(actual)
     assert len(expected_by_source) == len(expected)
     for source, expected_report in expected_by_source.items():
+        assert source in actual_by_source.keys()
         actual_report = actual_by_source[source]
         for key in expected_report:
             assert actual_report[key] == expected_report[key]
@@ -68,10 +69,21 @@ def test_get_reports():
             "source": "tests/data/kr/json_toml_report/report.json",
             "path": "tests/data/kr/json_toml_report/index.html",
             "dir": "tests/data/kr/json_toml_report",
-        },
+        }
     ]
 
     assert contains_at_least(actual, expected)
+
+    external = [
+        {
+            "source": "tests/data/kr/external/test1.toml",
+        },
+        {
+            "source": "tests/data/kr/external/nested/test2.json",
+        }
+    ]
+
+    assert contains_at_least(_get_external_reports("tests/data/kr/external"), external)
 
 
 def test_tmp_cd():

@@ -5,6 +5,7 @@ from .plugins.index import build_index
 import os
 import json
 import sys
+import glob
 
 import toml
 
@@ -16,7 +17,7 @@ REPORT_DEFAULTS = {
 Directory = namedtuple('Directory', ['path', 'dirnames', 'filenames'])
 
 
-def _load_report_config(directory):
+def _load_report_directory(directory):
     """Take Directory object containing a config file and return the contents
 
     Returns a dictionary containing the config contents. The only guarunteed
@@ -51,10 +52,33 @@ def _load_report_config(directory):
     return out
 
 
+def _get_external_reports(path):
+    json_candidates = glob.glob(f"{path}/**/*.json", recursive=True)
+    toml_candidates = glob.glob(f"{path}/**/*.toml", recursive=True)
+    reports = []
+    for filename in json_candidates:
+        with open(filename, "r") as f:
+            reports.append((filename, json.load(f)))
+    for filename in toml_candidates:
+        reports.append((filename, toml.load(filename)))
+
+    results = []
+    for filename, report in reports:
+        if 'link' not in report:
+            raise ValueError(f"External report {filename} must contain a `link` property.")
+        out = REPORT_DEFAULTS.copy()
+        for k, v in report.items():
+            out[k] = v
+        out['source'] = filename
+        out['path'] = report['link']
+        results.append(out)
+    return results
+
+
 def _get_reports(path='.'):
     dirs = (Directory(*d) for d in os.walk(path))
     with_config = (d for d in dirs if set(d.filenames) & set(REPORT_CONFIG_FILES))
-    reports = [_load_report_config(d) for d in with_config]
+    reports = [_load_report_directory(d) for d in with_config]
     return reports
 
 
@@ -69,7 +93,7 @@ def tmp_cd(path):
         os.chdir(curdir)
 
 
-def main(kr, outdir):
+def main(kr, external_reports, outdir):
     metadata_generators = [
         build_index,
     ]
@@ -83,8 +107,7 @@ def main(kr, outdir):
     # Replace output directory with copy of knowledge repo
     rmtree(outdir, ignore_errors=True)
     copytree(kr, outdir)
+    reports = _get_reports(outdir) + _get_external_reports(os.path.join(outdir, external_reports))
     with tmp_cd(outdir):
-        reports = _get_reports()
-
         for meta_gen in metadata_generators:
             meta_gen(reports)
