@@ -27,7 +27,8 @@ def isolated_knowledge_repo(kr_path, iso_path):
 def test_render():
     runner = CliRunner()
     with isolated_knowledge_repo('tests/data/kr', 'kr'):
-        runner.invoke(render, ['--knowledge-repo', 'kr'])
+        result = runner.invoke(render, ['--knowledge-repo', 'kr'], catch_exceptions=False)
+        assert result.exit_code == 0
         assert os.path.isfile('output/user_count/index.html')
         assert os.path.isfile('output/user_count/report.json')
 
@@ -35,7 +36,8 @@ def test_render():
 def test_index():
     runner = CliRunner()
     with isolated_knowledge_repo('tests/data/kr', 'kr'):
-        runner.invoke(render, ['--knowledge-repo', 'kr'])
+        result = runner.invoke(render, ['--knowledge-repo', 'kr'], catch_exceptions=False)
+        assert result.exit_code == 0
         assert os.path.isfile('output/index.html')
 
         with open('output/index.html', 'r') as infile:
