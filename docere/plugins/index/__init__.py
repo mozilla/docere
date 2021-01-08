@@ -1,3 +1,4 @@
+from collections import Counter
 from jinja2 import Environment, FileSystemLoader
 import os
 import re
@@ -12,6 +13,15 @@ TEMPLATE = ENV.get_template('index.html')
 
 
 def build_index(reports, directory='.'):
+    print(reports)
+    directory = {
+        "product": Counter(),
+        "area": Counter(),
+        "artifact": Counter(),
+        "tags": Counter(),
+    }
+    for report in reports:
+        directory["product"] = report["product"]
     index = TEMPLATE.render(reports=reports, slugify=slugify)
 
     with open(os.path.join(directory, 'index.html'), 'w') as outfile:
