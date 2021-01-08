@@ -1,4 +1,4 @@
-from docere.render import _get_reports, _get_external_reports, tmp_cd
+from docere.render import _get_reports, _get_external_reports, tmp_cd, Report
 import os
 
 
@@ -92,3 +92,18 @@ def test_tmp_cd():
         assert os.getcwd() != basewd
 
     assert os.getcwd() == basewd
+
+
+def test_report_list_conversions():
+    d = {
+        "title": "My report",
+        "publish_date": "2020-02-02",
+        "authors": ["Tim", "Kimmy"],
+        "path": ".",
+        "tags": ["spam", "eggs"],
+        "products": "Fenix",
+    }
+    report = Report.from_dict(d)
+    assert report.products == ["Fenix"]
+    assert report.tags == ["spam", "eggs"]
+    assert report.artifacts == []

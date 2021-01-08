@@ -1,19 +1,20 @@
 import os
 
 from .test_cli import isolated_knowledge_repo
-from docere.render import _get_reports
+from docere.render import _get_reports, Report
 from docere.plugins.index import build_index, slugify
 import pytest
+from datetime import date
 
 
 KR = 'tests/data/kr'
-EARLY_DATE = "2018-01-01"
-LATE_DATE = "2018-02-01"
+EARLY_DATE = date(2018, 1, 1)
+LATE_DATE = date(2018, 2, 1)
 
 
 @pytest.fixture
 def reports():
-    return(_get_reports(KR))
+    return [Report.from_dict(r) for r in _get_reports(KR)]
 
 
 def get_report_order_with_date_change(reports, dates):
@@ -25,8 +26,8 @@ def get_report_order_with_date_change(reports, dates):
     reports `title` in the resulting `index.html` file.
     """
     with isolated_knowledge_repo(KR, 'kr'):
-        reports[0]['publish_date'] = dates[0]
-        reports[1]['publish_date'] = dates[1]
+        reports[0].publish_date = dates[0]
+        reports[1].publish_date = dates[1]
 
         build_index(reports)
 
@@ -34,8 +35,8 @@ def get_report_order_with_date_change(reports, dates):
             contents = infile.read()
 
     return [
-        contents.index(reports[0]['title']),
-        contents.index(reports[1]['title'])
+        contents.index(reports[0].title),
+        contents.index(reports[1].title)
     ]
 
 

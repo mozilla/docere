@@ -1,5 +1,9 @@
 {
     "title": "Just Another JSON Report",
     "publish_date": "2018-01-02",
-    "author": "Joe Blow"
+    "author": "Joe Blow",
+    "products": "firefox-desktop",
+    "areas": "accounts",
+    "artifacts": "experiment",
+    "tags": "important project"
 }

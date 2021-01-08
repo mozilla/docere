@@ -1,5 +1,47 @@
-<h1 style="margin-top:6rem">Report Index</h1>
+<div class="row">
+  <div class="twelve columns">
+    <h1 style="margin-top:6rem">Report Index</h1>
+  </div>
+</div>
 
+<div class="row">
+<div class="sidebar four columns">
+  <!-- give buttons a class name and use CSS to manipulate -->
+  <div class='sidebar_group'>
+    <h4>Products</h4>
+    <ul>
+    {% for product, count in directory.products.most_common() %}
+      <li>{{product}} ({{ count }})</li>
+    {% endfor %}
+    </ul>
+  </div>
+  <div class='sidebar_group'>
+    <h4>Areas</h4>
+    <ul>
+    {% for area, count in directory.areas.most_common() %}
+      <li>{{area}} ({{ count }})</li>
+    {% endfor %}
+  </ul>
+  </div>
+  <div class='sidebar_group'>
+    <h4>Artifact</h4>
+    <ul>
+    {% for artifact, count in directory.artifacts.most_common() %}
+      <li>{{artifact}} ({{ count }})</li>
+    {% endfor %}
+    </ul>
+  </div>
+  <div class='sidebar_group'>
+    <h4>Tags</h4>
+    <ul>
+    {% for tag, count in directory.tags.most_common() %}
+      <li>{{tag}} ({{ count }})</li>
+    {% endfor %}
+  </ul>
+  </div>
+</div>
+
+<div class="eight columns">
 <table class="u-full-width">
   <thead>
     <tr>
@@ -13,6 +55,7 @@
         Publish Date
       </th>
   </thead>
+
 {% for report in reports|sort(attribute='publish_date', reverse=True) %}
   <tbody>
     <tr>
@@ -21,7 +64,7 @@
         <a name="{{ slugify(report) }}" href="#{{ slugify(report) }}"><img src="assets/link.svg" alt="anchor"></a>
       </td>
       <td>
-        {{report.author}}{{ report.authors|join(', ') }}
+        {{ report.authors|join(', ') }}
       </td>
       <td>
         {{report.publish_date}}
@@ -37,16 +80,19 @@
     <tr class="tag-tray">
       <td>
         <span class="tag-label">Product:</span><br>
-        {{ (report.product or ["None"]) | join(",") }}
+        {{ report.products | join(",") or "None"}}
       </td>
       <td>
-        <span class="tag-label">Area:</span><br>
-        {{ (report.area or ["None"]) | join(",") }}
+        <span class="tag-label">Areas:</span><br>
+        {{ report.areas | join(",") or "None" }}
       </td>
       <td>
         <span class="tag-label">Artifact:</span><br>
-        {{report.artifact}}
+        {{ report.artifacts | join(",") or "None"}}
       </td>
     </tr>
   </tbody>
 {% endfor %}
+</table>
+</div>
+</div>

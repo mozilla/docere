@@ -30,6 +30,7 @@ setup(
         'jinja2',
         'click',
         'toml',
+        'attrs',
     ],
     tests_require=test_deps,
     extras_require=extras,
