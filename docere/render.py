@@ -2,10 +2,13 @@ from collections import namedtuple
 from shutil import copytree, rmtree
 from contextlib import contextmanager
 from .plugins.index import build_index
+import attr
+import datetime
 import os
 import json
 import sys
 import glob
+from typing import List, Optional
 
 import toml
 
@@ -15,6 +18,40 @@ REPORT_DEFAULTS = {
 }
 
 Directory = namedtuple('Directory', ['path', 'dirnames', 'filenames'])
+
+
+@attr.s(auto_attribs=True)
+class Report:
+    title: str
+    publish_date: datetime.date
+    authors: List[str]
+    path: str
+    abstract: Optional[str]
+    products: List[str]
+    areas: List[str]
+    artifacts: List[str]
+    tags: List[str]
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "Report":
+        publish_date = datetime.datetime.strptime(d["publish_date"], "%Y-%m-%d").date()
+        authors = d.get("authors") or [d["author"]]
+        kwargs = {}
+        for key in ("products", "areas", "artifacts", "tags"):
+            kwargs[key] = []
+            if key in d:
+                if isinstance(d[key], str):
+                    kwargs[key] = [d[key]]
+                else:
+                    kwargs[key] = d[key]
+        return cls(
+            title=d["title"],
+            publish_date=publish_date,
+            authors=authors,
+            path=d["path"],
+            abstract=d.get("abstract"),
+            **kwargs
+        )
 
 
 def _load_report_directory(directory):
@@ -107,7 +144,11 @@ def main(kr, external_reports, outdir):
     # Replace output directory with copy of knowledge repo
     rmtree(outdir, ignore_errors=True)
     copytree(kr, outdir)
-    reports = _get_reports(outdir) + _get_external_reports(os.path.join(outdir, external_reports))
+    report_dicts = (
+        _get_reports(outdir) +
+        _get_external_reports(os.path.join(outdir, external_reports))
+    )
+    reports = [Report.from_dict(r) for r in report_dicts]
     with tmp_cd(outdir):
         for meta_gen in metadata_generators:
             meta_gen(reports)

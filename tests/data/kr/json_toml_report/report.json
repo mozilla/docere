@@ -2,8 +2,8 @@
     "title": "Just Another JSON Report",
     "publish_date": "2018-01-02",
     "author": "Joe Blow",
-    "product": "firefox-desktop",
-    "area": "accounts",
-    "artifact": "experiment",
-    "project": "important project"
+    "products": "firefox-desktop",
+    "areas": "accounts",
+    "artifacts": "experiment",
+    "tags": "important project"
 }

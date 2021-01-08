@@ -1,5 +1,47 @@
-<h1 style="margin-top:6rem">Report Index</h1>
+<div class="row">
+  <div class="twelve columns">
+    <h1 style="margin-top:6rem">Report Index</h1>
+  </div>
+</div>
 
+<div class="row">
+<div class="sidebar four columns">
+  <!-- give buttons a class name and use CSS to manipulate -->
+  <div class='sidebar_group'>
+    <h4>Products</h4>
+    <ul>
+    {% for product, count in directory.products.most_common() %}
+      <li>{{product}} ({{ count }})</li>
+    {% endfor %}
+    </ul>
+  </div>
+  <div class='sidebar_group'>
+    <h4>Areas</h4>
+    <ul>
+    {% for area, count in directory.areas.most_common() %}
+      <li>{{area}} ({{ count }})</li>
+    {% endfor %}
+  </ul>
+  </div>
+  <div class='sidebar_group'>
+    <h4>Artifact</h4>
+    <ul>
+    {% for artifact, count in directory.artifacts.most_common() %}
+      <li>{{artifact}} ({{ count }})</li>
+    {% endfor %}
+    </ul>
+  </div>
+  <div class='sidebar_group'>
+    <h4>Tags</h4>
+    <ul>
+    {% for tag, count in directory.tags.most_common() %}
+      <li>{{tag}} ({{ count }})</li>
+    {% endfor %}
+  </ul>
+  </div>
+</div>
+
+<div class="eight columns">
 <table class="u-full-width">
   <thead>
     <tr>
@@ -13,15 +55,8 @@
         Publish Date
       </th>
   </thead>
-{% set product_list = [] %}
-{% set artifact_list = [] %}
-{% set area_list = [] %}
-{% set project_list = [] %}
+
 {% for report in reports|sort(attribute='publish_date', reverse=True) %}
-  {{ product_list.append(report.get('product')) | default("", True) }}
-  {{ artifact_list.append(report.get('artifact')) | default("", True) }}
-  {{ area_list.append(report.get('area')) | default("", True) }}
-  {{ project_list.append(report.get('project')) | default("", True) }}
   <tbody>
     <tr>
       <td>
@@ -29,7 +64,7 @@
         <a name="{{ slugify(report) }}" href="#{{ slugify(report) }}"><img src="assets/link.svg" alt="anchor"></a>
       </td>
       <td>
-        {{report.author}}{{ report.authors|join(', ') }}
+        {{ report.authors|join(', ') }}
       </td>
       <td>
         {{report.publish_date}}
@@ -45,61 +80,19 @@
     <tr class="tag-tray">
       <td>
         <span class="tag-label">Product:</span><br>
-        {% if report.product is string %}
-          {{ ([report.product] or ["None"]) | join(",") }}
-        {% elif report.product is not string and report.product is iterable %}
-        {{ report.product | join(",") }}
-        {% endif %}
+        {{ report.products | join(",") or "None"}}
       </td>
       <td>
-        <span class="tag-label">Area:</span><br>
-        {% if report.area is string %}
-          {{ ([report.area] or ["None"]) | join(",") }}
-        {% elif report.area is not string and report.area is iterable %}
-        {{ report.area | join(",") }}
-        {% endif %}
+        <span class="tag-label">Areas:</span><br>
+        {{ report.areas | join(",") or "None" }}
       </td>
       <td>
         <span class="tag-label">Artifact:</span><br>
-        {% if report.artifact is string %}
-          {{ ([report.artifact] or ["None"]) | join(",") }}
-        {% elif report.artifact is not string and report.artifact is iterable %}
-        {{ report.artifact | join(",") }}
-        {% endif %}
+        {{ report.artifacts | join(",") or "None"}}
       </td>
     </tr>
   </tbody>
 {% endfor %}
-<!-- give buttons a class name and use CSS to manipulate -->
-<tr class='sidebar_group'>
-  <h4>Product</h4>
-  {% for entry in product_list | unique %}
-    {% if entry %}
-      <button>{{entry}}</button>
-    {% endif %}
-  {% endfor %}
-</tr>
-<tr class='sidebar_group'>
-  <h4>Area</h4>
-  {% for entry in area_list | unique %}
-    {% if entry %}
-      <button>{{entry}}</button>
-    {% endif %}
-  {% endfor %}
-</tr>
-<tr class='sidebar_group'>
-  <h4>Artifact</h4>
-  {% for entry in artifact_list | unique %}
-    {% if entry %}
-      <button>{{entry}} </button>
-    {% endif %}
-  {% endfor %}
-</tr>
-<tr class='sidebar_group'>
-  <h4>Project</h4>
-  {% for entry in project_list | unique %}
-    {% if entry %}
-      <button>{{entry}}</button>
-    {% endif %}
-    {% endfor %}
-</tr>
+</table>
+</div>
+</div>
