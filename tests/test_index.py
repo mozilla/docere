@@ -2,7 +2,7 @@ import os
 
 from .test_cli import isolated_knowledge_repo
 from docere.render import _get_reports, Report
-from docere.plugins.index import build_index, slugify
+from docere.plugins.index import build_index, slugify_report
 import pytest
 from datetime import date
 
@@ -73,4 +73,4 @@ def test_anchor_link_exists_in_output(reports):
 
 
 def test_slugify_gives_unique_results(reports):
-    assert len(set(slugify(r) for r in reports)) == len(reports)
+    assert len(set(slugify_report(r) for r in reports)) == len(reports)
