@@ -6,6 +6,7 @@ import shutil
 
 this_dir, this_filename = os.path.split(__file__)
 
+
 def build_index(reports, directory='.'):
     env = Environment(loader=FileSystemLoader(
         os.path.join(this_dir, 'templates/')
