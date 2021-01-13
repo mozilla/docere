@@ -57,11 +57,13 @@
   </thead>
 
 {% for report in reports|sort(attribute='publish_date', reverse=True) %}
-  <tbody>
+  <tbody class="report" data-products="{{report.products | join (',')}}" data-areas="{{report.areas | join(',')}}"
+  data-authors="{{report.authors | map('slugify_string') | join (',')}}" data-date="{{report.publish_date}}"
+  data-artifacts="{{report.artifacts | join (',')}}" data-tags="{{report.tags | join (',')}}">
     <tr>
       <td>
         <a href="{{report.path}}">{{report.title}}</a>
-        <a name="{{ slugify(report) }}" href="#{{ slugify(report) }}"><img src="assets/link.svg" alt="anchor"></a>
+        <a name="{{ slugify_report(report) }}" href="#{{ slugify_report(report) }}"><img src="assets/link.svg" alt="anchor"></a>
       </td>
       <td>
         {{ report.authors|join(', ') }}
@@ -84,7 +86,7 @@
       </td>
       <td>
         <span class="tag-label">Areas:</span><br>
-        {{ report.areas | join(",") or "None" }}
+        {{ (report.areas + report.tags) | sort | join(",") or "None" }}
       </td>
       <td>
         <span class="tag-label">Artifact:</span><br>
