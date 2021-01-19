@@ -75,7 +75,7 @@ def _load_report_directory(directory):
 
     # Set defaults
     out = REPORT_DEFAULTS.copy()
-    out['source'] = config_path
+    out['source'] = os.path.normpath(config_path)
     for (key, value) in config.items():
         out[key] = value
 
@@ -83,21 +83,23 @@ def _load_report_directory(directory):
         out['path'] = config['link']
     else:
         # Add directory in which config file was found
-        out['dir'] = directory.path
-        out['path'] = os.path.join(directory.path, out['file'])
+        out['dir'] = os.path.normpath(directory.path)
+        out['path'] = os.path.normpath(os.path.join(directory.path, out['file']))
 
     return out
 
 
-def _get_external_reports(path):
-    json_candidates = glob.glob(f"{path}/**/*.json", recursive=True)
-    toml_candidates = glob.glob(f"{path}/**/*.toml", recursive=True)
-    reports = []
-    for filename in json_candidates:
-        with open(filename, "r") as f:
-            reports.append((filename, json.load(f)))
-    for filename in toml_candidates:
-        reports.append((filename, toml.load(filename)))
+def _get_external_reports(base, path):
+    # Ensure that relative paths are constructed with respect to the right base
+    with tmp_cd(base):
+        json_candidates = glob.glob(f"{path}/**/*.json", recursive=True)
+        toml_candidates = glob.glob(f"{path}/**/*.toml", recursive=True)
+        reports = []
+        for filename in json_candidates:
+            with open(filename, "r") as f:
+                reports.append((filename, json.load(f)))
+        for filename in toml_candidates:
+            reports.append((filename, toml.load(filename)))
 
     results = []
     for filename, report in reports:
@@ -113,9 +115,11 @@ def _get_external_reports(path):
 
 
 def _get_reports(path='.'):
-    dirs = (Directory(*d) for d in os.walk(path))
-    with_config = (d for d in dirs if set(d.filenames) & set(REPORT_CONFIG_FILES))
-    reports = [_load_report_directory(d) for d in with_config]
+    # Ensure that relative paths are constructed with respect to the right base
+    with tmp_cd(path):
+        dirs = (Directory(*d) for d in os.walk("."))
+        with_config = (d for d in dirs if set(d.filenames) & set(REPORT_CONFIG_FILES))
+        reports = [_load_report_directory(d) for d in with_config]
     return reports
 
 
@@ -146,7 +150,7 @@ def main(kr, external_reports, outdir):
     copytree(kr, outdir)
     report_dicts = (
         _get_reports(outdir) +
-        _get_external_reports(os.path.join(outdir, external_reports))
+        _get_external_reports(outdir, external_reports)
     )
     reports = [Report.from_dict(r) for r in report_dicts]
     with tmp_cd(outdir):
