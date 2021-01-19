@@ -28,9 +28,9 @@ def test_get_reports():
             "publish_date": "2018-01-01",
             "author": "Joseph Blowseph",
             "file": "not_index.html",
-            "source": "tests/data/kr/crash_count/report.json",
-            "path": "tests/data/kr/crash_count/not_index.html",
-            "dir": "tests/data/kr/crash_count",
+            "source": "crash_count/report.json",
+            "path": "crash_count/not_index.html",
+            "dir": "crash_count",
             "abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
         },
         {
@@ -38,16 +38,16 @@ def test_get_reports():
             "publish_date": "2018-01-02",
             "author": "Joe Blow",
             "file": "index.html",
-            "source": "tests/data/kr/user_count/report.json",
-            "path": "tests/data/kr/user_count/index.html",
-            "dir": "tests/data/kr/user_count",
+            "source": "user_count/report.json",
+            "path": "user_count/index.html",
+            "dir": "user_count",
         },
         {
             "title": "Mozilla Manifesto",
             "publish_date": "2018-01-01",
             "author": "Mitchell Baker",
             "file": "index.html",
-            "source": "tests/data/kr/some_external_report/report.json",
+            "source": "some_external_report/report.json",
             "link": "https://www.mozilla.org/en-US/about/manifesto/",
             "path": "https://www.mozilla.org/en-US/about/manifesto/",
             "abstract": "The open, global internet is the most powerful communication and collaboration resource we have ever seen."  # noqa:E501
@@ -57,18 +57,18 @@ def test_get_reports():
             "publish_date": "2018-01-02",
             "author": "Tom",
             "file": "index.html",
-            "source": "tests/data/kr/toml_report/report.toml",
-            "path": "tests/data/kr/toml_report/index.html",
-            "dir": "tests/data/kr/toml_report",
+            "source": "toml_report/report.toml",
+            "path": "toml_report/index.html",
+            "dir": "toml_report",
         },
         {
             "title": "Just Another JSON Report",
             "publish_date": "2018-01-02",
             "author": "Joe Blow",
             "file": "index.html",
-            "source": "tests/data/kr/json_toml_report/report.json",
-            "path": "tests/data/kr/json_toml_report/index.html",
-            "dir": "tests/data/kr/json_toml_report",
+            "source": "json_toml_report/report.json",
+            "path": "json_toml_report/index.html",
+            "dir": "json_toml_report",
         }
     ]
 
@@ -76,14 +76,14 @@ def test_get_reports():
 
     external = [
         {
-            "source": "tests/data/kr/external/test1.toml",
+            "source": "external/test1.toml",
         },
         {
-            "source": "tests/data/kr/external/nested/test2.json",
+            "source": "external/nested/test2.json",
         }
     ]
 
-    assert contains_at_least(_get_external_reports("tests/data/kr/external"), external)
+    assert contains_at_least(_get_external_reports("tests/data/kr", "external"), external)
 
 
 def test_tmp_cd():
