@@ -11,7 +11,7 @@
     <h4>Products</h4>
     <ul>
     {% for product, count in directory.products.most_common() %}
-      <li>{{product}} ({{ count }})</li>
+      <li><input type="checkbox" id="products:{{product}}"><label for="products:{{product}}">{{product}} ({{ count }})</label></li>
     {% endfor %}
     </ul>
   </div>
@@ -19,7 +19,7 @@
     <h4>Areas</h4>
     <ul>
     {% for area, count in directory.areas.most_common() %}
-      <li>{{area}} ({{ count }})</li>
+      <li><input type="checkbox" id="areas:{{area}}"><label for="areas:{{area}}">{{area}} ({{ count }})</label></li>
     {% endfor %}
   </ul>
   </div>
@@ -27,7 +27,7 @@
     <h4>Artifact</h4>
     <ul>
     {% for artifact, count in directory.artifacts.most_common() %}
-      <li>{{artifact}} ({{ count }})</li>
+      <li><input type="checkbox" id="artifacts:{{artifact}}"><label for="artifacts:{{artifact}}">{{artifact}} ({{ count }})</label></li>
     {% endfor %}
     </ul>
   </div>
@@ -35,7 +35,7 @@
     <h4>Tags</h4>
     <ul>
     {% for tag, count in directory.tags.most_common() %}
-      <li>{{tag}} ({{ count }})</li>
+    <li><input type="checkbox" id="tags:{{tag}}"><label for="tags:{{tag}}">{{tag}} ({{ count }})</label></li>
     {% endfor %}
   </ul>
   </div>
@@ -98,3 +98,59 @@
 </table>
 </div>
 </div>
+
+<script>
+  function box_checked(e) {
+    const checked = document.querySelectorAll(".sidebar input[type='checkbox']:checked");
+    let filters = {};
+    for(box of checked) {
+      let [domain, value] = box.id.split(":");
+      if(!(domain in filters)) { filters[domain] = []; }
+      filters[domain].push(value);
+    }
+    apply_filters(filters);
+  }
+    // domain = { "area": ["accounts"] }
+  function apply_filters(filters){
+    const reports = document.getElementsByClassName("report");
+    for(report of reports) {
+      let hide_me = false;
+      for(domain in filters) {
+        let report_tags = (domain in report.dataset ? report.dataset[domain].split(',') : []);
+        let matches_domain = false;
+        for(filter_tag of filters[domain]) {
+          if(report_tags.includes(filter_tag)) {
+            matches_domain = true;
+          }
+        }
+        if(!matches_domain) {
+          hide_me = true;
+        }
+      }
+      report.hidden = hide_me;
+    }
+
+    const params = new URLSearchParams();
+    for(const [domain, selected] of Object.entries(filters)) {
+      for(const value of selected) {
+        params.append(domain, value);
+      }
+    }
+    window.history.replaceState({}, "", `${location.pathname}?${params}`);
+  }
+
+  (function(){
+    const checkboxes = document.querySelectorAll(".sidebar input[type='checkbox']");
+    for(box of checkboxes) {
+      box.onclick = box_checked;
+    }
+
+  const params = new URLSearchParams(location.search);
+  let filters = {};
+  for(key of params.keys()) {
+    filters[key] = params.getAll(key);
+  }
+  apply_filters(filters);
+
+  })();
+</script>
